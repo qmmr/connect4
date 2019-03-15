@@ -3,6 +3,7 @@ Connect 4
 
 For details, requirements and instructions see README.md file
 """
+from itertools import groupby
 
 current_player = 1
 empty_token = " "
@@ -10,13 +11,45 @@ player1_token = 'X'  # u'\u26aa'
 player2_token = 'O'  # u'\u26ab'
 
 global_board = [
-    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 0
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 1
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 2
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 3
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 4
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 5
 ]
+
+
+def check_rows(board, player):
+    token = player1_token if current_player == 1 else player2_token
+
+    for row_idx in range(5, -1, -1):
+        # print("Row idx: {}".format(row_idx))
+        grouped = [list(v) for k, v in groupby(board[row_idx])]
+        # print("Grouped {}".format(grouped))
+
+        # First check if any group has length equal to 4
+        # has_length = any(n == 4 for n in [len(l) for l in grouped])
+        # if not has_length:
+        #     return False
+        # print("Has length {}".format(has_length))
+
+        # Create a dictionary from grouped values
+        obj = {key: val for (key, val) in [tuple(
+            [v[0], len(v)]) for v in grouped]}
+        # print("obj", obj)
+
+        # Check if player has 4 tokens
+        if token in obj and obj[token] == 4:
+            return True
+
+    return False
+
+
+def check_winner(board, player):
+    won = check_rows(board, player)
+
+    return won
 
 
 def print_board(board):
@@ -31,7 +64,6 @@ def print_board(board):
     for row in board:
         # Draw column
         for idx, col in enumerate(row):
-            # print(idx)
             if idx != 6:
                 print("[{}]".format(col), end="")
             else:
@@ -57,12 +89,6 @@ def drop_token(board, selected_column):
                 token if val == empty_token and idx == selected_column else val for idx, val in enumerate(row)]
 
             found_spot = True
-        else:
-            print("row {} col {} is taken!".format(
-                current_row, selected_column))
-            continue
-
-    # print("board after placing the token", board)
 
     return board
 
@@ -84,6 +110,7 @@ while (winner == None):
         if is_valid_column(col_number):
             # Fill the global board with player one's token
             global_board = drop_token(global_board, col_number)
+            check_winner(global_board, current_player)
             # End player one's turn
             current_player = 2
         else:
@@ -96,6 +123,7 @@ while (winner == None):
         if is_valid_column(col_number):
             # Fill the global board with player two's token
             global_board = drop_token(global_board, col_number)
+            check_winner(global_board, current_player)
             # End player two's turn
             current_player = 1
         else:

@@ -110,7 +110,8 @@ while (winner == None):
         if is_valid_column(col_number):
             # Fill the global board with player one's token
             global_board = drop_token(global_board, col_number)
-            check_winner(global_board, current_player)
+            if check_winner(global_board, current_player):
+                winner = current_player
             # End player one's turn
             current_player = 2
         else:
@@ -123,10 +124,21 @@ while (winner == None):
         if is_valid_column(col_number):
             # Fill the global board with player two's token
             global_board = drop_token(global_board, col_number)
-            check_winner(global_board, current_player)
+            if check_winner(global_board, current_player):
+                winner = current_player
             # End player two's turn
             current_player = 1
         else:
             print("Wrong column, please choose number between 1-7")
 
     print_board(global_board)
+
+
+print("The game has ended!\n")
+
+if winner == 1:
+    print("Player #1 has won!")
+elif winner == 2:
+    print("Player #2 has won!")
+else:
+    print("It's a draw!")

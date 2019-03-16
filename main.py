@@ -100,7 +100,7 @@ def is_valid_column(column):
 winner = None
 turn_count = 0
 
-while (winner == None):
+while (winner is None):
     turn_count += 1
     print("Turn number {}!".format(turn_count))
     if current_player == 1:

@@ -39,7 +39,8 @@ def check_rows(board, player):
 
 
 def check_winner(board, player):
-    won = check_rows(board, player)
+    return check_rows(board=board, player=player) or check_cols(
+        board=board, player=player)
 
     return won
 

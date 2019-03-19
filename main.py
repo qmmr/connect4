@@ -38,6 +38,13 @@ def check_rows(board, player):
     return False
 
 
+def check_cols(board, player):
+    # Convert rows to columns
+    flipped_board = [list(val) for val in list(zip(*board))]
+
+    return check_rows(flipped_board, player)
+
+
 def check_winner(board, player):
     return check_rows(board=board, player=player) or check_cols(
         board=board, player=player)

@@ -49,8 +49,6 @@ def check_winner(board, player):
     return check_rows(board=board, player=player) or check_cols(
         board=board, player=player)
 
-    return won
-
 
 def print_board(board):
     # Loop over each column and print column numbers
@@ -84,9 +82,9 @@ def drop_token(board, selected_column):
 
         # Check if col in current row is empty
         if row[selected_column] == ' ':
-            # List comprehension that puts token in selected column if it's empty
+            # List comprehension that puts token in selected column if empty
             board[current_row] = [
-                token if val == empty_token and idx == selected_column else val for idx, val in enumerate(row)]
+                token if v == " " and i == selected_column else v for i, v in enumerate(row)]
 
             found_spot = True
 
@@ -104,7 +102,7 @@ while (winner is None):
     turn_count += 1
     print("Turn number {}!".format(turn_count))
     if current_player == 1:
-        print("Player's one move!\n")
+        print("\nPlayer's one move!\n")
         col_number = int(input("Please enter column number: "))
 
         if is_valid_column(col_number):
@@ -118,7 +116,7 @@ while (winner is None):
             print("Wrong column, please choose number between 1-7")
 
     else:
-        print("Player's two move!\n")
+        print("\nPlayer's two move!\n")
         col_number = int(input("Please enter column number: "))
 
         if is_valid_column(col_number):

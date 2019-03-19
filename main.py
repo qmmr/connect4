@@ -23,21 +23,13 @@ global_board = [
 def check_rows(board, player):
     token = player1_token if current_player == 1 else player2_token
 
-    for row_idx in range(5, -1, -1):
-        # print("Row idx: {}".format(row_idx))
+    for row_idx in range(len(board) - 1, -1, -1):
+        # Group adjacent items into lists
         grouped = [list(v) for k, v in groupby(board[row_idx])]
-        # print("Grouped {}".format(grouped))
-
-        # First check if any group has length equal to 4
-        # has_length = any(n == 4 for n in [len(l) for l in grouped])
-        # if not has_length:
-        #     return False
-        # print("Has length {}".format(has_length))
 
         # Create a dictionary from grouped values
         obj = {key: val for (key, val) in [tuple(
             [v[0], len(v)]) for v in grouped]}
-        # print("obj", obj)
 
         # Check if player has 4 tokens
         if token in obj and obj[token] == 4:

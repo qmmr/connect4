@@ -45,9 +45,37 @@ def check_cols(board, player):
     return check_rows(flipped_board, player)
 
 
+def check_diagonals(board, player):
+    # Covert diagonals to rows
+    left2right_positions = (
+        ((3, 0), (2, 1), (1, 2), (0, 3)),
+        ((4, 0), (3, 1), (2, 2), (1, 3), (0, 4)),
+        ((5, 0), (4, 1), (3, 2), (2, 3), (1, 4), (0, 5)),
+        ((6, 0), (5, 1), (4, 2), (3, 3), (2, 4), (1, 5)),
+        ((6, 1), (5, 2), (4, 3), (3, 4), (2, 5)),
+        ((6, 2), (5, 3), (4, 4), (3, 5)),
+    )
+
+    left2right_board = []
+
+    for t in left2right_positions:
+        # print("i: {}, t: {}".format(i, t))
+        new_row = []
+
+        for pos, row in t:
+            new_row.append(board[row][pos])
+
+        left2right_board.append(new_row)
+
+    # for l in left2right_board:
+    #     print(l)
+
+    return check_rows(left2right_board, player)
+
+
 def check_winner(board, player):
     return check_rows(board=board, player=player) or check_cols(
-        board=board, player=player)
+        board=board, player=player) or check_diagonals(board=board, player=player)
 
 
 def print_board(board):

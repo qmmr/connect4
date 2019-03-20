@@ -51,6 +51,7 @@ def check_winner(board, player):
 
 
 def print_board(board):
+    print("\n", "-" * 20, "\n")
     # Loop over each column and print column numbers
     for idx in range(1, 8):
         if idx != 7:
@@ -66,6 +67,8 @@ def print_board(board):
                 print("[{}]".format(col), end="")
             else:
                 print("[{}]".format(col))
+
+    print("\n", "-" * 20, "\n")
 
 
 def drop_token(board, selected_column):
@@ -98,11 +101,16 @@ def is_valid_column(column):
 winner = None
 turn_count = 0
 
+# Main loop of the game
+print("Welcome to connect 4!\n")
+print("Let's begin!\n")
+print("-" * 20, "\n")
 while (winner is None):
     turn_count += 1
     print("Turn number {}!".format(turn_count))
     if current_player == 1:
         print("\nPlayer's one move!\n")
+        print("-" * 20, "\n")
         col_number = int(input("Please enter column number: "))
 
         if is_valid_column(col_number):

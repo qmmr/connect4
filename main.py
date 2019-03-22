@@ -126,7 +126,7 @@ def drop_token(board, selected_column):
 
         row = board[current_row]
 
-        # Check if col in current row is empty
+        # Check if space in the current row is empty
         if row[selected_column] == ' ':
             # List comprehension that puts token in selected column if empty
             board[current_row] = [

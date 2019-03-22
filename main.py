@@ -46,31 +46,46 @@ def check_cols(board, player):
 
 
 def check_diagonals(board, player):
-    # Covert diagonals to rows
-    left2right_positions = (
+    # Tuples containing (row, position) of diagonal lines, bottom to top a.k.a. b2t
+    b2t_diagonals = (
         ((3, 0), (2, 1), (1, 2), (0, 3)),
         ((4, 0), (3, 1), (2, 2), (1, 3), (0, 4)),
         ((5, 0), (4, 1), (3, 2), (2, 3), (1, 4), (0, 5)),
-        ((6, 0), (5, 1), (4, 2), (3, 3), (2, 4), (1, 5)),
-        ((6, 1), (5, 2), (4, 3), (3, 4), (2, 5)),
-        ((6, 2), (5, 3), (4, 4), (3, 5)),
+        ((5, 1), (4, 2), (3, 3), (2, 4), (1, 5), (0, 6)),
+        ((5, 2), (4, 3), (3, 4), (2, 5), (1, 6)),
+        ((5, 3), (4, 4), (3, 5), (2, 6)),
     )
 
-    left2right_board = []
+    # Tuples containing (row, position) of diagonal lines, top to bottom a.k.a. t2b
+    t2b_diagonals = (
+        ((2, 0), (3, 1), (4, 2), (5, 3)),
+        ((1, 0), (2, 1), (3, 2), (4, 3), (5, 4)),
+        ((0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)),
+        ((0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6)),
+        ((0, 2), (1, 3), (2, 4), (3, 5), (4, 6)),
+        ((0, 3), (1, 4), (2, 5), (3, 6)),
+    )
 
-    for t in left2right_positions:
-        # print("i: {}, t: {}".format(i, t))
+    # Lists to hold rows from diagonals that can hold 4 or more tokens in the current board
+    b2t_rows = []
+    t2b_rows = []
+
+    # Loops to create rows from diagonal lines
+    for d in b2t_diagonals:
         new_row = []
-
-        for pos, row in t:
+        for row, pos in d:
             new_row.append(board[row][pos])
 
-        left2right_board.append(new_row)
+        b2t_rows.append(new_row)
 
-    # for l in left2right_board:
-    #     print(l)
+    for d in t2b_diagonals:
+        new_row = []
+        for row, pos in d:
+            new_row.append(board[row][pos])
 
-    return check_rows(left2right_board, player)
+        t2b_rows.append(new_row)
+
+    return check_rows(b2t_rows, player) or check_rows(t2b_rows, player)
 
 
 def check_winner(board, player):

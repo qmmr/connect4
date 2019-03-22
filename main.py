@@ -3,6 +3,7 @@ Connect 4
 
 For details, requirements and instructions see README.md file
 """
+import os
 from itertools import groupby
 
 current_player = 1
@@ -94,7 +95,6 @@ def check_winner(board, player):
 
 
 def print_board(board):
-    print("\n", "-" * 20, "\n")
     # Loop over each column and print column numbers
     for idx in range(1, 8):
         if idx != 7:
@@ -111,7 +111,7 @@ def print_board(board):
             else:
                 print("[{}]".format(col))
 
-    print("\n", "-" * 20, "\n")
+    print("\n")
 
 
 def drop_token(board, selected_column):
@@ -180,10 +180,11 @@ while (winner is None):
         else:
             print("Wrong column, please choose number between 1-7")
 
+    os.system('cls' if os.system == 'nt' else 'clear')
     print_board(global_board)
 
 
-print("The game has ended!\n")
+print("Game Over\n")
 
 if winner == 1:
     print("Player #1 has won!")

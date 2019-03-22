@@ -8,8 +8,8 @@ from itertools import groupby
 
 current_player = 1
 empty_token = " "
-player1_token = 'X'  # u'\u26aa'
-player2_token = 'O'  # u'\u26ab'
+player1_token = 'X'  # u'\u274C'
+player2_token = 'O'  # u'\u2B55'
 
 global_board = [
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],  # 0
@@ -101,6 +101,8 @@ def print_board(board):
             print("[{}]".format(idx), end="")
         else:
             print("[{}]".format(idx))
+
+    print("-" * 21)
 
     # Loop rows
     for row in board:
